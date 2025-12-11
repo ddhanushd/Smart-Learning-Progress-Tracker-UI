@@ -1,18 +1,15 @@
 <div class="page">
-  <h1>Smart Learning Progress Tracker</h1>
+  <header><h1>Topics</h1></header>
 
   @if (loading) {
     <div>Loading topics...</div>
   }
 
-  @if (errorMessage && !loading) {
-    <div class="error">
-      {{ errorMessage }}
-    </div>
+  @if (errorMessage) {
+    <div class="error">{{ errorMessage }}</div>
   }
 
   @if (topics$ | async; as topics) {
-
     @if (topics.length === 0 && !loading) {
       <div>No topics found.</div>
     }
@@ -23,20 +20,13 @@
           <h3>{{ topic.name }}</h3>
           <p><strong>Confidence:</strong> {{ topic.confidence }}%</p>
           <p><strong>Status:</strong> {{ topic.status }}</p>
-          <p><strong>Completed:</strong> {{ topic.completed ? 'Yes' : 'No' }}</p>
           <p><strong>Deadline:</strong> {{ topic.deadline | date }}</p>
 
           @if (topic.revisions?.length) {
             <p><strong>Last Revision:</strong></p>
             <small>
-              {{
-                topic.revisions![topic.revisions!.length - 1].revisedAt
-                  | date:'short'
-              }}
-              –
-              {{
-                topic.revisions![topic.revisions!.length - 1].note
-              }}
+              {{ topic.revisions![topic.revisions!.length - 1].revisedAt | date:'short' }}
+              – {{ topic.revisions![topic.revisions!.length - 1].note }}
             </small>
           }
         </div>

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, shareReplay, tap } from 'rxjs';
 import { Revision, Topic } from '../../../core/models/topic.model';
 import { TopicService } from '../../../core/services/topicservice';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-topic-list',
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './topic-list.html',
   styleUrl: './topic-list.scss',
 })
@@ -33,15 +34,16 @@ export class TopicList implements OnInit {
           this.errorMessage = response.message || 'Failed to load topics';
           return [];
         }
-        return response.data;
-      })
+        return response.data ?? [];
+      }),
+      shareReplay(1)
     );
+
+    // ensure loading flag clears on first emission
+    this.topics$.subscribe({ next: () => { this.loading = false; }, error: () => { this.loading = false; } });
   }
 
-   getLastRevision(topic: Topic): Revision | undefined {
-    return topic.revisions && topic.revisions.length
-      ? topic.revisions[topic.revisions.length - 1]
-      : undefined;
+  getLastRevision(topic: Topic): Revision | undefined {
+    return topic.revisions && topic.revisions.length ? topic.revisions[topic.revisions.length - 1] : undefined;
   }
-
 }

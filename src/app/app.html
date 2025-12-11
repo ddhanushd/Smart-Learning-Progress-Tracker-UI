@@ -1,1 +1,24 @@
-<router-outlet></router-outlet>
+<header class="app-header">
+  <div class="container">
+    <div class="brand">
+      <a routerLink="/" class="brand-link">
+        <span class="logo">📚</span>
+        <span class="title">Smart Learning Tracker</span>
+      </a>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/topics" routerLinkActive="active" class="nav-link">Topics</a>
+      <a routerLink="/topics/create" routerLinkActive="active" class="nav-link">Create Topic</a>
+      <a routerLink="/stats" routerLinkActive="active" class="nav-link">Stats</a>
+    </nav>
+  </div>
+</header>
+
+<main class="app-main container">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer container">
+  <small>© {{ currentYear }} D Dhanush — Smart Learning Tracker</small>
+</footer>

@@ -1,0 +1,44 @@
+<div class="page create-page">
+  <header>
+    <h1>Create Topic</h1>
+  </header>
+
+  @if (successMessage) {
+    <div class="success">{{ successMessage }}</div>
+  }
+
+  <form [formGroup]="createForm" (ngSubmit)="submitCreate()">
+    <div class="form-row">
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" />
+      @if (createForm.controls['name'].invalid && createForm.controls['name'].touched) {
+        <small class="error">Name is required (min 3 chars).</small>
+      }
+    </div>
+
+    <div class="form-row">
+      <label for="confidence">Confidence (%)</label>
+      <input id="confidence" type="number" formControlName="confidence" min="0" max="100" />
+      @if (createForm.controls['confidence'].invalid && createForm.controls['confidence'].touched) {
+        <small class="error">Confidence must be 0–100.</small>
+      }
+    </div>
+
+    <div class="form-row">
+      <label for="deadline">Deadline</label>
+      <input id="deadline" type="date" formControlName="deadline" />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="submitting">
+        @if (submitting) { Creating... } @else { Create Topic }
+      </button>
+
+     <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+
+    @if (errorMessage) {
+      <div class="error">{{ errorMessage }}</div>
+    }
+  </form>
+</div>
