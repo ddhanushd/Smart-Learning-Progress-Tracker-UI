@@ -32,5 +32,10 @@ export class TopicService {
   getStats(): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(`${this.baseUrl}/stats`);
   }
+   // Mark topic as complete
+  markComplete(id: string): Observable<ApiResponse<Topic>> {
+    return this.http.put<ApiResponse<Topic>>(`${this.baseUrl}/${id}/complete`, {});
+  }
+
   
 }

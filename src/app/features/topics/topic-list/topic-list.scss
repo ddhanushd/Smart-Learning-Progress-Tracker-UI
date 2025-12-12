@@ -1,46 +1,123 @@
-.create-section {
-  padding: 12px;
-  border-radius: 8px;
-  background: #fafafa;
-  margin-bottom: 16px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+.page {
+  padding: 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 
-  .form-row {
-    display: flex;
-    flex-direction: column;
+  header { margin-bottom: 12px; }
+
+  .loading { color: #444; margin-bottom: 8px; }
+  .error { color: #c62828; margin-bottom: 8px; }
+
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .topic-card {
+    padding: 12px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    transition: transform .12s ease, opacity .12s ease;
+
+    &.completed {
+      opacity: 0.6;
+      background: #eef7ee;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .meta { margin: 6px 0; color: #444; font-size: 13px; }
+    .revision { margin-top: 8px; font-size: 13px; color: #666; }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .btn-complete {
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        background: #2e7d32;
+        color: #fff;
+        font-size: 13px;
+      }
+
+      .completed-badge {
+        background: #e7f4e7;
+        color: #2e7d32;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 12px;
+      }
+    }
+    /* existing styles... add these blocks to your file or replace whole file with prior SCSS + these */
+
+.btn-revise {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #1976d2;
+  background: transparent;
+  color: #1976d2;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.revise-form {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  background: #f7fbff;
+  border: 1px solid #e6f0ff;
+
+  label {
+    display: block;
     margin-bottom: 8px;
-
-    label {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
+    font-size: 13px;
     input {
-      padding: 8px;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-    }
-
-    .error {
-      color: #c62828;
-      font-size: 12px;
+      display: block;
+      width: 100%;
+      padding: 6px 8px;
       margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
     }
   }
 
-  .form-actions {
+  .revise-actions {
+    display: flex;
+    gap: 8px;
     margin-top: 8px;
 
     button {
-      padding: 8px 12px;
+      padding: 6px 10px;
       border-radius: 6px;
       border: none;
       cursor: pointer;
     }
+    button[type="button"] {
+      background: transparent;
+      border: 1px solid #ddd;
+    }
   }
 
-  .success {
-    color: #2e7d32;
-    margin-bottom: 8px;
+  .error {
+    color: #c62828;
+    margin-top: 6px;
+    font-size: 13px;
   }
+}
+
+  }
+
 }
