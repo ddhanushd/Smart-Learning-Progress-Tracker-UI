@@ -1,0 +1,25 @@
+@if (stats) {
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <h3>Total Topics</h3>
+      <p>{{ stats.totalTopics }}</p>
+    </div>
+
+    <div class="stat-card strong">
+      <h3>Strong</h3>
+      <p>{{ stats.strongCount }}</p>
+    </div>
+
+    <div class="stat-card average">
+      <h3>Average</h3>
+      <p>{{ stats.averageCount }}</p>
+    </div>
+
+    <div class="stat-card weak">
+      <h3>Weak</h3>
+      <p>{{ stats.weakCount }}</p>
+    </div>
+
+  </div>
+}
