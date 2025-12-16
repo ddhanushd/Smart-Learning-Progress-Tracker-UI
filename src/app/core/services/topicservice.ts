@@ -37,5 +37,14 @@ export class TopicService {
     return this.http.put<ApiResponse<Topic>>(`${this.baseUrl}/${id}/complete`, {});
   }
 
+ getTopicById(id: string): Observable<ApiResponse<Topic>> {
+   console.log('SERVICE getTopicById called with:', id);
+  return this.http.get<ApiResponse<Topic>>(
+    `${this.baseUrl}/${id}`
+  );
+}
+
+
+
   
 }

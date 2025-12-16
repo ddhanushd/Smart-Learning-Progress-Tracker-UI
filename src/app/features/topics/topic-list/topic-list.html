@@ -1,5 +1,37 @@
 <div class="page">
-  <header><h1>Topics</h1></header>
+
+  <header class="list-header">
+    <h1>Topics</h1>
+
+    <div class="controls">
+      <!-- Search -->
+      <div class="search">
+        <input
+          placeholder="Search topics..."
+          [value]="searchTerm"
+          (input)="onSearchChange($any($event.target).value)"
+        />
+        @if (searchTerm) {
+          <button
+            class="clear"
+            (click)="clearSearch()"
+          >✕</button>
+        }
+      </div>
+
+      <!-- Sort -->
+      <div class="sort">
+        <select (change)="onSortChange($any($event.target).value)">
+          <option value="">Default</option>
+          <option value="conf-desc">Confidence ↓</option>
+          <option value="conf-asc">Confidence ↑</option>
+          <option value="deadline-nearest">Deadline</option>
+          <option value="name-asc">Name A–Z</option>
+          <option value="name-desc">Name Z–A</option>
+        </select>
+      </div>
+    </div>
+  </header>
 
   @if (loading) {
     <div class="loading">Loading topics...</div>
@@ -10,68 +42,85 @@
   }
 
   @if (topics$ | async; as topics) {
-    @if (topics.length === 0 && !loading) {
-      <div>No topics found.</div>
-    }
-
     <div class="topics-grid">
-      @for (topic of topics; track topic.id) {
-        <div class="topic-card" [class.completed]="topic.completed">
 
+      @for (topic of topics; track topic.id) {
+
+        <!-- CARD (click navigates to detail) -->
+        <div
+          class="topic-card"
+          (click)="goToDetail(topic.id)"
+        >
+
+          <!-- CARD HEADER -->
           <div class="card-top">
             <h3>{{ topic.name }}</h3>
 
             <div class="actions">
+
+              <!-- Revise (stop propagation) -->
               @if (!topic.completed) {
-                <button (click)="openRevise(topic)" class="btn-revise">Revise</button>
+                <button
+                  class="btn-revise"
+                  (click)="$event.stopPropagation(); openRevise(topic)"
+                >
+                  Revise
+                </button>
               }
-              @if (!topic.completed) {
-                <button (click)="markComplete(topic.id)" class="btn-complete">Mark Complete</button>
-              } @else {
-                <span class="completed-badge">Completed</span>
-              }
+
+              <!-- Toggle Complete (stop propagation) -->
+              <button
+                class="btn-complete"
+                [class.completed]="topic.completed"
+                [disabled]="isCompleting(topic.id)"
+                (click)="$event.stopPropagation(); toggleComplete(topic)"
+              >
+                @if (isCompleting(topic.id)) {
+                  <span class="small-spinner"></span>
+                  Processing
+                } @else {
+                  @if (topic.completed) { ✓ Completed } @else { Mark Complete }
+                }
+              </button>
+
             </div>
           </div>
 
-          <p class="meta"><strong>Confidence:</strong> {{ topic.confidence }}%</p>
-          <p class="meta"><strong>Status:</strong> {{ topic.status }}</p>
-          <p class="meta"><strong>Deadline:</strong> {{ topic.deadline | date }}</p>
+          <!-- CARD BODY -->
+          <p><strong>Confidence:</strong> {{ topic.confidence }}%</p>
+          <p><strong>Status:</strong> {{ topic.status }}</p>
+          <p><strong>Deadline:</strong> {{ topic.deadline | date }}</p>
 
           @if (topic.revisions?.length) {
-            <div class="revision">
-              <p><strong>Last Revision:</strong></p>
-              <small>
-                {{ topic.revisions![topic.revisions!.length - 1].revisedAt | date:'short' }}
-                – {{ topic.revisions![topic.revisions!.length - 1].note }}
-              </small>
-            </div>
+            <small>
+              Last revision:
+              {{ getLastRevision(topic)?.revisedAt | date:'short' }}
+              – {{ getLastRevision(topic)?.note }}
+            </small>
           }
 
-          <!-- Inline Revise Form -->
+          <!-- INLINE REVISE FORM -->
           @if (editStates[topic.id]?.open) {
-            <div class="revise-form">
-              <label>
-                Confidence (%)
-                <input type="number" [(ngModel)]="editStates[topic.id].confidence" min="0" max="100" />
-              </label>
-
-              <label>
-                Note
-                <input type="text" [(ngModel)]="editStates[topic.id].note" maxlength="200" />
-              </label>
-
-              <div class="revise-actions">
-                <button (click)="submitRevise(topic.id)" [disabled]="editStates[topic.id].submitting">
-                  @if (editStates[topic.id].submitting) { Saving... } @else { Save }
-                </button>
-                <button (click)="cancelRevise(topic.id)" type="button">Cancel</button>
-              </div>
-
-              @if (editStates[topic.id].error) {
-                <div class="error">{{ editStates[topic.id].error }}</div>
-              }
+            <div
+              class="revise-form"
+              (click)="$event.stopPropagation()"
+            >
+              <input
+                type="number"
+                [(ngModel)]="editStates[topic.id].confidence"
+                min="0"
+                max="100"
+              />
+              <input
+                type="text"
+                [(ngModel)]="editStates[topic.id].note"
+                placeholder="Revision note"
+              />
+              <button (click)="submitRevise(topic.id)">Save</button>
+              <button (click)="cancelRevise(topic.id)">Cancel</button>
             </div>
           }
+
         </div>
       }
     </div>
