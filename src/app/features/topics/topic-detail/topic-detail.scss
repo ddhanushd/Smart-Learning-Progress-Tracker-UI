@@ -2,15 +2,17 @@
   padding: 16px;
 }
 
+/* Back button */
 .back {
   margin-bottom: 12px;
   border: none;
   background: transparent;
-  color: #1976d2;
+  color: var(--primary);
   cursor: pointer;
   font-weight: 600;
 }
 
+/* Error text */
 .error {
-  color: #c62828;
+  color: var(--danger);
 }

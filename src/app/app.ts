@@ -12,4 +12,25 @@ export class App {
   protected readonly title = signal('smart-learning-tracker-ui');
   currentYear = new Date().getFullYear();
 
+  isDarkMode = false;
+
+  constructor() {
+    const savedTheme = localStorage.getItem('theme');
+    this.isDarkMode = savedTheme === 'dark';
+    this.applyTheme();
+  }
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    this.applyTheme();
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+  }
+
+  private applyTheme() {
+    document.body.classList.remove('theme-light', 'theme-dark');
+    document.body.classList.add(
+      this.isDarkMode ? 'theme-dark' : 'theme-light'
+    );
+  }
+
 }

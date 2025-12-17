@@ -3,7 +3,7 @@
   max-width: 520px;
   margin: 40px auto;
   padding: 24px;
-  background: #ffffff;
+  background: var(--bg-card);
   border-radius: 10px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -19,15 +19,15 @@
 .create-page h1 {
   font-size: 22px;
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 /* Success message */
 .success {
   margin-bottom: 16px;
   padding: 10px 14px;
-  background-color: #e6f7ef;
-  color: #1e7f5c;
+  background-color: #e6f7ef; /* semantic success bg */
+  color: var(--success);
   border-radius: 6px;
   font-size: 14px;
 }
@@ -43,21 +43,23 @@
   margin-bottom: 6px;
   font-size: 14px;
   font-weight: 500;
-  color: #34495e;
+  color: var(--text-secondary);
 }
 
 /* Inputs */
 .form-row input {
   padding: 10px 12px;
   font-size: 14px;
-  border: 1px solid #dcdfe3;
+  border: 1px solid var(--border);
   border-radius: 6px;
   outline: none;
+  background: var(--bg-card);
+  color: var(--text-primary);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .form-row input:focus {
-  border-color: #4f46e5;
+  border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
 }
 
@@ -65,7 +67,7 @@
 .error {
   margin-top: 6px;
   font-size: 12px;
-  color: #e74c3c;
+  color: var(--danger);
 }
 
 /* Form actions */
@@ -90,12 +92,12 @@
 
 /* Primary button */
 .form-actions button[type="submit"] {
-  background-color: #4f46e5;
+  background-color: var(--primary);
   color: #ffffff;
 }
 
 .form-actions button[type="submit"]:hover {
-  background-color: #4338ca;
+  opacity: 0.9;
 }
 
 .form-actions button[type="submit"]:disabled {
@@ -105,10 +107,10 @@
 
 /* Cancel button */
 .form-actions button[type="button"] {
-  background-color: #f1f2f4;
-  color: #2c3e50;
+  background-color: var(--bg-soft);
+  color: var(--text-primary);
 }
 
 .form-actions button[type="button"]:hover {
-  background-color: #e1e3e6;
+  opacity: 0.85;
 }

@@ -8,7 +8,7 @@
 
 /* Card */
 .stat-card {
-  background: #ffffff;
+  background: var(--bg-card);
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
@@ -26,7 +26,7 @@
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: #555;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -36,18 +36,18 @@
   margin-top: 12px;
   font-size: 32px;
   font-weight: 700;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 /* Variants */
 .stat-card.strong {
-  border-top: 4px solid #2ecc71;
+  border-top: 4px solid var(--success);
 }
 
 .stat-card.average {
-  border-top: 4px solid #f39c12;
+  border-top: 4px solid var(--warning);
 }
 
 .stat-card.weak {
-  border-top: 4px solid #e74c3c;
+  border-top: 4px solid var(--danger);
 }

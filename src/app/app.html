@@ -11,6 +11,10 @@
       <a routerLink="/topics" routerLinkActive="active" class="nav-link">Topics</a>
       <a routerLink="/topics/create" routerLinkActive="active" class="nav-link">Create Topic</a>
       <a routerLink="/topics/stats" routerLinkActive="active" class="nav-link">Stats</a>
+      <button class="theme-toggle" (click)="toggleTheme()">
+  {{ isDarkMode ? '☀️ Light' : '🌙 Dark' }}
+</button>
+
     </nav>
   </div>
 </header>
