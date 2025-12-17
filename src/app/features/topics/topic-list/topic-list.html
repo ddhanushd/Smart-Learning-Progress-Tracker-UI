@@ -46,11 +46,21 @@
 
       @for (topic of topics; track topic.id) {
 
-        <!-- CARD (click navigates to detail) -->
         <div
           class="topic-card"
           (click)="goToDetail(topic.id)"
         >
+
+         <!-- CONFIDENCE PLACEHOLDER -->
+<span
+  class="confidence-placeholder"
+  [class.low]="topic.confidence < 40"
+  [class.medium]="topic.confidence >= 40 && topic.confidence < 70"
+  [class.high]="topic.confidence >= 70"
+>
+  {{ topic.confidence }}%
+</span>
+
 
           <!-- CARD HEADER -->
           <div class="card-top">
@@ -58,7 +68,6 @@
 
             <div class="actions">
 
-              <!-- Revise (stop propagation) -->
               @if (!topic.completed) {
                 <button
                   class="btn-revise"
@@ -68,7 +77,6 @@
                 </button>
               }
 
-              <!-- Toggle Complete (stop propagation) -->
               <button
                 class="btn-complete"
                 [class.completed]="topic.completed"

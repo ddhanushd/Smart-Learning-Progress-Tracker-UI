@@ -1,38 +1,53 @@
-.page {
-  padding: 16px;
-}
-
+/* Grid layout */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
+  margin: 24px 0;
 }
 
+/* Card */
 .stat-card {
-  background: #fff;
-  padding: 16px;
+  background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* Title */
 .stat-card h3 {
-  margin: 0 0 6px;
-  font-size: 14px;
-  color: #555;
-}
-
-.stat-card p {
-  font-size: 24px;
-  font-weight: 700;
   margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.stat-card.weak { border-left: 4px solid #e53935; }
-.stat-card.average { border-left: 4px solid #fb8c00; }
-.stat-card.strong { border-left: 4px solid #43a047; }
-.stat-card.overdue { border-left: 4px solid #6a1b9a; }
+/* Value */
+.stat-card p {
+  margin-top: 12px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
+}
 
-.error {
-  color: #c62828;
+/* Variants */
+.stat-card.strong {
+  border-top: 4px solid #2ecc71;
+}
+
+.stat-card.average {
+  border-top: 4px solid #f39c12;
+}
+
+.stat-card.weak {
+  border-top: 4px solid #e74c3c;
 }
