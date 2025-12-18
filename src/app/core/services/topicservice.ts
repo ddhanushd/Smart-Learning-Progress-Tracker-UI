@@ -43,6 +43,20 @@ export class TopicService {
     `${this.baseUrl}/${id}`
   );
 }
+getTopicsPaged(
+  page: number,
+  size: number
+): Observable<ApiResponse<any>> {
+  return this.http.get<ApiResponse<any>>(
+    `${this.baseUrl}/page`,
+    {
+      params: {
+        page,
+        size
+      }
+    }
+  );
+}
 
 
 

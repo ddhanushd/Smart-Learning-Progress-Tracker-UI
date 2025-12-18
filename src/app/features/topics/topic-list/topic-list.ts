@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, map, Observable, shareReplay, tap } from 'rxjs';
+import { BehaviorSubject, finalize, map, Observable, shareReplay, tap } from 'rxjs';
 import { Revision, Topic } from '../../../core/models/topic.model';
 import { TopicService } from '../../../core/services/topicservice';
 import { CommonModule } from '@angular/common';
@@ -44,6 +44,11 @@ export class TopicList implements OnInit {
   searchTerm = '';
   sortBy: SortOption = '';
 
+  page = 0;
+  size = 6;
+  totalPages = 0;
+  totalElements = 0;
+
 
   constructor(private topicService: TopicService, private router: Router) {}
 
@@ -54,25 +59,28 @@ export class TopicList implements OnInit {
   /* ================= Load ================= */
 
   loadTopics(): void {
-    this.loading = true;
-    this.errorMessage = '';
+  this.loading = true;
+  this.errorMessage = '';
 
-    this.topicService.getAllTopics().subscribe({
-      next: res => {
-        this.loading = false;
+  this.topics$ = this.topicService
+    .getTopicsPaged(this.page, this.size)
+    .pipe(
+      map(res => {
         if (!res?.success) {
           this.errorMessage = res?.message || 'Failed to load topics';
-          return;
+          return [];
         }
-        this.originalList = res.data ?? [];
-        this.applyFiltersAndSort();
-      },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = 'Server error loading topics';
-      }
-    });
-  }
+
+        const pageData = res.data;
+
+        this.totalPages = pageData.totalPages;
+        this.totalElements = pageData.totalElements;
+
+        return pageData.content;
+      }),
+      finalize(() => (this.loading = false))
+    );
+}
 
   /* ================= Search & Sort ================= */
 
@@ -211,4 +219,12 @@ export class TopicList implements OnInit {
 goToDetail(id: string): void {
   this.router.navigate(['/topics', id]);
 }
+
+goToPage(newPage: number): void {
+  if (newPage < 0 || newPage >= this.totalPages) return;
+  this.page = newPage;
+  this.loadTopics();
+}
+
+
 }

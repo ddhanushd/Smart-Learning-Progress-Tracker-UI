@@ -51,6 +51,8 @@
           (click)="goToDetail(topic.id)"
         >
 
+        
+
          <!-- CONFIDENCE PLACEHOLDER -->
 <span
   class="confidence-placeholder"
@@ -132,5 +134,30 @@
         </div>
       }
     </div>
+    @if (totalPages > 1) {
+  <div class="pagination">
+
+    <button
+      (click)="goToPage(page - 1)"
+      [disabled]="page === 0"
+    >
+      ← Prev
+    </button>
+
+    <span>
+      Page {{ page + 1 }} of {{ totalPages }}
+    </span>
+
+    <button
+      (click)="goToPage(page + 1)"
+      [disabled]="page + 1 >= totalPages"
+    >
+      Next →
+    </button>
+
+  </div>
+}
+
+    
   }
 </div>
