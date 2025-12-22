@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { AuthService } from './core/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,15 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('smart-learning-tracker-ui');
+ protected readonly title = signal('smart-learning-tracker-ui');
   currentYear = new Date().getFullYear();
-
   isDarkMode = false;
 
-  constructor() {
+  // ✅ Dependencies go HERE
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {
     const savedTheme = localStorage.getItem('theme');
     this.isDarkMode = savedTheme === 'dark';
     this.applyTheme();
@@ -31,6 +35,17 @@ export class App {
     document.body.classList.add(
       this.isDarkMode ? 'theme-dark' : 'theme-light'
     );
+  }
+
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: () => {
+        // fallback safety
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
 }

@@ -58,11 +58,11 @@ export class TopicList implements OnInit {
 
   /* ================= Load ================= */
 
-  loadTopics(): void {
+ loadTopics(): void {
   this.loading = true;
   this.errorMessage = '';
 
-  this.topics$ = this.topicService
+  this.topicService
     .getTopicsPaged(this.page, this.size)
     .pipe(
       map(res => {
@@ -72,15 +72,19 @@ export class TopicList implements OnInit {
         }
 
         const pageData = res.data;
-
         this.totalPages = pageData.totalPages;
         this.totalElements = pageData.totalElements;
 
         return pageData.content;
       }),
       finalize(() => (this.loading = false))
-    );
+    )
+    .subscribe(list => {
+      this.originalList = list;        // ✅ source of truth
+      this.topicsSubject.next(list);   // ✅ emit to UI
+    });
 }
+
 
   /* ================= Search & Sort ================= */
 
@@ -182,7 +186,9 @@ export class TopicList implements OnInit {
   }
 
   cancelRevise(id: string): void {
-    delete this.editStates[id];
+    if (this.editStates[id]) {
+    this.editStates[id].open = false;
+  }
   }
 
   submitRevise(id: string): void {
@@ -228,3 +234,5 @@ goToPage(newPage: number): void {
 
 
 }
+
+

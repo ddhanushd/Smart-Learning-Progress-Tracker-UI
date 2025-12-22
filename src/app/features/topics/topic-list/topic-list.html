@@ -127,7 +127,7 @@
                 placeholder="Revision note"
               />
               <button (click)="submitRevise(topic.id)">Save</button>
-              <button (click)="cancelRevise(topic.id)">Cancel</button>
+              <button (click)="$event.stopPropagation(); cancelRevise(topic.id)">Cancel</button>
             </div>
           }
 
