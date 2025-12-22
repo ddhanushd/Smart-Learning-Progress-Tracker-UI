@@ -4,7 +4,6 @@ import { TopicCreate } from './features/topics/topic-create/topic-create';
 import { TopicDetail } from './features/topics/topic-detail/topic-detail';
 import { TopicStats } from './features/topics/topic-stats/topic-stats';
 import { authGuard } from './core/guards/auth-guard';
-import { adminGuard } from './core/guards/admin-guard';
 import { Login } from './features/login/login';
 
 export const routes: Routes = [
@@ -19,7 +18,7 @@ export const routes: Routes = [
   {
     path: 'topics/create',
     component: TopicCreate,
-    canActivate: [authGuard, adminGuard]
+    canActivate: [authGuard]
   },
   {
     path: 'topics/stats',
