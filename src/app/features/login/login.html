@@ -1,37 +1,54 @@
-<div class="login-container">
-  <h2>Login</h2>
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2>Smart Learning Tracker</h2>
+    <p class="subtitle">Sign in to continue</p>
 
-  <form (ngSubmit)="login()">
-    <div>
-      <label>Username</label>
-      <input
-        type="username"
-        [(ngModel)]="username"
-        name="username"
-        required
-      />
-    </div>
+    <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
 
-    <div>
-      <label>Password</label>
-      <input
-        type="password"
-        [(ngModel)]="password"
-        name="password"
-        required
-      />
-    </div>
+      <!-- Username -->
+      <div class="field">
+        <input
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          #usernameCtrl="ngModel"
+          placeholder="Username"
+          required
+        />
+        <label>Username</label>
 
-    <button type="submit" [disabled]="loading">
-      {{ loading ? 'Logging in...' : 'Login' }}
-    </button>
+        @if (usernameCtrl.invalid && usernameCtrl.touched) {
+          <small class="field-error">Username is required</small>
+        }
+      </div>
 
-    @if (loading) {
-      <p>Authenticating…</p>
-    }
+      <!-- Password -->
+      <div class="field">
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          #passwordCtrl="ngModel"
+          placeholder="Password"
+          required
+        />
+        <label>Password</label>
 
-    @if (error) {
-      <p class="error">{{ error }}</p>
-    }
-  </form>
+        @if (passwordCtrl.invalid && passwordCtrl.touched) {
+          <small class="field-error">Password is required</small>
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="loading || loginForm.invalid"
+      >
+        @if (loading) { Signing in… } @else { Login }
+      </button>
+
+      @if (error) {
+        <div class="error-msg">{{ error }}</div>
+      }
+    </form>
+  </div>
 </div>

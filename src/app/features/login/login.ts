@@ -11,10 +11,10 @@ import { FormsModule, NgModel } from '@angular/forms';
 })
 export class Login {
 
-  username = '';
-  password = ''; 
+   username = '';
+  password = '';
   loading = false;
-  error = '';
+  error: string | null = null;
 
   constructor(
     private authService: AuthService,
@@ -22,8 +22,14 @@ export class Login {
   ) {}
 
   login() {
-    this.error = '';
+    // ✅ Simple required validation
+    if (!this.username || !this.password) {
+      this.error = 'Username and password are required';
+      return;
+    }
+
     this.loading = true;
+    this.error = null;
 
     this.authService.login({
       username: this.username,
@@ -35,7 +41,7 @@ export class Login {
       },
       error: err => {
         this.loading = false;
-        this.error = err?.error?.message || 'Login failed';
+        this.error = err?.error?.message || 'Invalid username or password';
       }
     });
   }
