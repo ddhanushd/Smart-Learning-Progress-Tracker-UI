@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-    apiBaseUrl: 'https://your-production-url/api/v1',
-  authBaseUrl: 'https://your-production-url/auth'
+  apiBaseUrl: 'https://smart-learning-progress-tracker.onrender.com/api/v1',
+  authBaseUrl: 'https://smart-learning-progress-tracker.onrender.com/auth'
 };
