@@ -1,23 +1,23 @@
 🎨 Smart Learning Progress Tracker — Frontend
 
-A modern Angular frontend for the Smart Learning Progress Tracker application, designed to work seamlessly with a JWT-secured Spring Boot backend.
+A production-ready Angular frontend for the Smart Learning Progress Tracker application, designed to integrate seamlessly with a JWT-secured Spring Boot backend.
 
-This frontend focuses on clean UX, secure authentication handling, and real-world Angular best practices, demonstrating how a production UI integrates with a stateless backend.
+This project demonstrates how a modern Angular application handles stateless authentication, secure token management, and real-world UI patterns commonly used in enterprise systems.
 
 ✨ Key Features
 🔐 Authentication & Session Management
 
 Username & password–based login
 
-JWT Access Token handling
+JWT access token handling
 
-Transparent Refresh Token flow (no user interaction)
+Automatic refresh token flow (fully transparent to users)
 
 Secure logout with backend refresh-token invalidation
 
 Persistent login across browser refreshes
 
-Automatic redirect on unauthorized access (401)
+Automatic redirection on unauthorized access (401)
 
 🔒 Refresh tokens are never exposed in the UI
 
@@ -25,19 +25,19 @@ Automatic redirect on unauthorized access (401)
 
 Protected routes using Angular route guards
 
-Authentication-only guard (authGuard)
+Authentication-only guard (AuthGuard)
 
-Backend-driven authorization (no role guessing in UI)
+Backend-driven authorization (no role logic in UI)
 
-Clean redirection to login on session expiry
+Clean redirect to login on session expiry
 
-📚 Topic Management UI
+📚 Topic Management
 
 View all learning topics
 
 Search topics by name
 
-Sort topics by:
+Sorting by:
 
 Confidence
 
@@ -45,23 +45,23 @@ Name
 
 Deadline
 
-Paginated topic listing
+Pagination support
 
 Topic detail view
 
-Inline revision support:
+Inline actions:
 
 Update confidence
 
 Add revision notes
 
-Mark topic as completed
+Mark topics as completed
 
 Real-time UI updates after actions
 
 📊 Learning Analytics
 
-Statistics dashboard showing:
+Statistics dashboard displaying:
 
 Strong topics
 
@@ -69,21 +69,21 @@ Average topics
 
 Weak topics
 
-Aggregated view for quick progress tracking
+Aggregated insights for quick progress tracking
 
 🎨 UI & UX
 
 Clean, distraction-free layout
 
-Dark-mode support with theme persistence
+Dark mode with theme persistence
 
-Separate layout for authentication pages
+Separate layouts for authentication and protected pages
 
-Login page has no header/footer
+Login page without header/footer
 
 Responsive design
 
-Clear loading & error states
+Clear loading and error states
 
 Minimal, professional styling (no heavy UI libraries)
 
@@ -97,10 +97,10 @@ AppComponent (Layout)
  │    ├── TopicCreateComponent
  │    └── TopicStatsComponent
 
-🔑 Authentication Flow (Frontend Perspective)
+🔑 Authentication Flow (Frontend)
 🔐 Login
 
-User submits username & password
+User submits credentials
 
 Backend returns:
 
@@ -114,13 +114,13 @@ User redirected to protected routes
 
 🔁 Token Refresh (Automatic)
 
-Access token expiry detected in HTTP interceptor
+Access token expiry detected via HTTP interceptor
 
 Refresh token used to fetch a new access token
 
 Original request retried silently
 
-User experience remains uninterrupted
+No user interruption
 
 🔓 Logout
 
@@ -137,37 +137,84 @@ User redirected to login page
 
 Frontend does not enforce roles
 
-Backend is the single source of truth
+Backend remains the single source of truth
 
-UI reacts gracefully to 401 and 403 responses
+UI reacts gracefully to 401 / 403 responses
 
 ✔ Stateless UI
 
 No session state stored in components
 
-All authentication is token-based
+Fully token-based authentication
 
 Clean separation of concerns
 
 ✔ Layout Separation
 
-Login page rendered without app shell
+Authentication pages rendered without app shell
 
 Protected pages rendered with full layout
 
-Prevents visual clutter and improves UX
+Improves UX and avoids visual clutter
 
 🧰 Tech Stack
 Layer	Technology
 Framework	Angular (Standalone Components)
 Language	TypeScript
 Routing	Angular Router
-State Handling	Component state + Observables
 HTTP	Angular HttpClient
 Auth Handling	HTTP Interceptors
+State	Component state + Observables
 Styling	SCSS
-UI Pattern	Clean, minimal, dashboard-style
-▶️ Running the Frontend
+UI Pattern	Minimal, dashboard-style
+🌐 Deployment
+
+The application is fully deployed and production-ready, with the frontend hosted on Vercel and the backend hosted on Render.
+
+🔗 Live URLs
+
+Frontend (Angular UI):
+https://smart-learning-progress-tracker-ui.vercel.app
+
+Backend (Spring Boot API):
+https://smart-learning-progress-tracker-1.onrender.com
+
+⚙️ Production Environment Configuration
+
+Frontend is configured to use the deployed backend:
+
+export const environment = {
+  production: true,
+  apiBaseUrl: 'https://smart-learning-progress-tracker-1.onrender.com/api/v1'
+};
+
+🔐 Production Highlights
+
+Secure cross-origin communication between Vercel and Render
+
+Stateless JWT-based authentication
+
+Production-grade CORS configuration
+
+Automatic token refresh works seamlessly in production
+
+Same authentication and authorization flow as local development
+
+✅ Verified in Production
+
+Login & logout flow
+
+Automatic token refresh
+
+Route protection on reload
+
+Unauthorized access handling (401)
+
+Search, sort, and pagination
+
+Revision & completion workflows
+
+▶️ Running the Frontend Locally
 1️⃣ Install dependencies
 npm install
 
@@ -186,23 +233,9 @@ ng serve
 4️⃣ Access
 http://localhost:4200
 
-🧪 Tested Scenarios
-
-Login / logout flow
-
-Token refresh after access token expiry
-
-Route protection on reload
-
-Unauthorized access handling
-
-Search, sort, pagination
-
-Revision & completion workflows
-
 🚀 Future Enhancements
 
-Role-based UI hints (UX only)
+Role-based UI hints (UX-only)
 
 Toast notifications
 
@@ -212,9 +245,6 @@ Improved accessibility
 
 Mobile-first refinements
 
-🎯 Interview-Ready Highlights
-
-“The frontend uses Angular route guards and HTTP interceptors to integrate with a stateless JWT-secured backend. Authentication is transparent to users, with refresh tokens handled silently and authorization enforced strictly server-side.”
 
 👤 Author
 
@@ -224,4 +254,4 @@ Java | Spring Boot | Angular
 
 🔗 GitHub: https://github.com/ddhanushd
 
-⭐ If you like this project, give it a star and feel free to contribute!
+⭐ If you like this project, feel free to star it or contribute!
